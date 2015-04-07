@@ -68,19 +68,7 @@ class Router {
 		}
 		
 		// filter out usernames
-		$usernames = array();
-		
-		// check page owner
-		$page_owner = elgg_get_page_owner_entity();
-		if (!empty($page_owner) && elgg_instanceof($page_owner, 'user')) {
-			$usernames[] = $page_owner->username;
-		}
-		
-		// check logged in user
-		$user = elgg_get_logged_in_user_entity();
-		if (!empty($user) && elgg_instanceof($user, 'user')) {
-			$usernames[] = $user->username;
-		}
+		$usernames = self::getUsernamesToIgnore();
 		
 		$segments = elgg_extract('segments', $page_information);
 		if (!empty($segments) && is_array($segments)) {
@@ -95,5 +83,28 @@ class Router {
 		}
 		
 		newrelic_name_transaction('/' . implode('/', $transaction));
+	}
+	
+	/**
+	 * Get the usernames of page_owner and logged in user to ignore in named transactions
+	 *
+	 * @return array
+	 */
+	protected static function getUsernamesToIgnore() {
+		$usernames = array();
+		
+		// check page owner
+		$page_owner = elgg_get_page_owner_entity();
+		if (!empty($page_owner) && elgg_instanceof($page_owner, 'user')) {
+			$usernames[] = $page_owner->username;
+		}
+		
+		// check logged in user
+		$user = elgg_get_logged_in_user_entity();
+		if (!empty($user) && elgg_instanceof($user, 'user')) {
+			$usernames[] = $user->username;
+		}
+		
+		return $usernames;
 	}
 }
