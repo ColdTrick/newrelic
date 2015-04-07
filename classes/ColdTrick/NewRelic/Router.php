@@ -34,17 +34,7 @@ class Router {
 		}
 		
 		// ultimate fallback
-		$url = current_page_url();
-		$path = parse_url($url, PHP_URL_PATH);
-		
-		$segments = explode('/', trim($path, '/'));
-		$identifier = array_shift($segments);
-		
-		$fallback = array(
-			'identifier' => $identifier,
-			'segments' => $segments
-		);
-		self::buildTransaction($fallback);
+		self::fallbackUrlHandling();
 	}
 	
 	/**
@@ -106,5 +96,26 @@ class Router {
 		}
 		
 		return $usernames;
+	}
+	
+	/**
+	 * Build the page elements for report based on the page URL
+	 *
+	 * @return void
+	 */
+	protected static function fallbackUrlHandling() {
+		// get current page url
+		$url = current_page_url();
+		$path = parse_url($url, PHP_URL_PATH);
+		
+		// build the array for handling
+		$segments = explode('/', trim($path, '/'));
+		$identifier = array_shift($segments);
+		
+		$fallback = array(
+			'identifier' => $identifier,
+			'segments' => $segments
+		);
+		self::buildTransaction($fallback);
 	}
 }
