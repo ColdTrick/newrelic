@@ -1,0 +1,22 @@
+{
+	"name": "coldtrick/newrelic",
+	"description": "Adds support for New Relic performance metrics",
+	"type": "elgg-plugin",
+	"keywords": ["elgg", "plugin", "tools", "performance"],
+	"license": "GPL-2.0",
+	"support": {
+		"source": "https://github.com/ColdTrick/newrelic",
+		"issues": "https://github.com/ColdTrick/newrelic/issues"
+	},
+	"autoload": {
+		"classmap": ["classes/"]
+	},
+	"require": {
+		"php": ">=5.4.0",
+		"ext-newrelic": "*",
+		"composer/installers": "^1.0.8"
+	},
+	"require-dev": {
+		"coldtrick/sniffs": "dev-master"
+	}
+}
