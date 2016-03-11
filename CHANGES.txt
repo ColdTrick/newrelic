@@ -1,6 +1,11 @@
 Version history
 ===============
 
+1.0.1 (2016-03-11):
+
+- Tested for Elgg 2.0
+- Small coding style changes
+
 1.0 (2015-04-07):
 
 - first release
