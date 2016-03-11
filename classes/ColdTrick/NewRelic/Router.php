@@ -50,7 +50,7 @@ class Router {
 			return;
 		}
 		
-		$transaction = array();
+		$transaction = [];
 		
 		$identifier = elgg_extract('identifier', $page_information);
 		if (!empty($identifier)) {
@@ -81,17 +81,17 @@ class Router {
 	 * @return array
 	 */
 	protected static function getUsernamesToIgnore() {
-		$usernames = array();
+		$usernames = [];
 		
 		// check page owner
 		$page_owner = elgg_get_page_owner_entity();
-		if (!empty($page_owner) && elgg_instanceof($page_owner, 'user')) {
+		if (elgg_instanceof($page_owner, 'user')) {
 			$usernames[] = $page_owner->username;
 		}
 		
 		// check logged in user
 		$user = elgg_get_logged_in_user_entity();
-		if (!empty($user) && elgg_instanceof($user, 'user')) {
+		if (elgg_instanceof($user, 'user')) {
 			$usernames[] = $user->username;
 		}
 		
@@ -112,10 +112,10 @@ class Router {
 		$segments = explode('/', trim($path, '/'));
 		$identifier = array_shift($segments);
 		
-		$fallback = array(
+		$fallback = [
 			'identifier' => $identifier,
-			'segments' => $segments
-		);
+			'segments' => $segments,
+		];
 		self::buildTransaction($fallback);
 	}
 }

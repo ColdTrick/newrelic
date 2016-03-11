@@ -16,5 +16,5 @@ if (extension_loaded('newrelic')) {
  */
 function newrelic_init() {
 	
-	elgg_register_plugin_hook_handler('route', 'all', array('\ColdTrick\NewRelic\Router', 'pageListener'), 99999);
+	elgg_register_plugin_hook_handler('route', 'all', '\ColdTrick\NewRelic\Router::pageListener', 99999);
 }
