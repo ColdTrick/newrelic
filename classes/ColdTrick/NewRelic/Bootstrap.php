@@ -79,7 +79,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 			// log the route name
 			newrelic_add_custom_parameter('route:name', $route->getName());
 		} else {
-			$path = parse_url(current_page_url(),  PHP_URL_PATH);
+			$path = parse_url(current_page_url(), PHP_URL_PATH);
 		}
 		
 		newrelic_name_transaction($path);
