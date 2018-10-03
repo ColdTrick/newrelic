@@ -12,7 +12,9 @@ Adds support for [New Relic][newrelic] performance metrics to your Elgg installa
 Features
 --------
 
-- [Named transactions][php_api_named]
+- [Named transactions][php_api_named] used to report visited page
+- [Custom params][php_api_custom] set some custome route information
 
 [newrelic]: https://docs.newrelic.com/docs/agents/php-agent
-[php_api_named]: https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-api#api-name-wt
+[php_api_named]: https://docs.newrelic.com/docs/agents/php-agent/php-agent-api/newrelic_name_transaction
+[php_api_custom]: https://docs.newrelic.com/docs/agents/php-agent/php-agent-api/newrelic_add_custom_parameter
