@@ -1,6 +1,11 @@
 Version history
 ===============
 
+2.0 (2019-03-27):
+
+- changed: improved transaction name logging for Elgg 3.0
+- changed: increased minimal Elgg version to 3.0
+
 1.0.1 (2016-03-11):
 
 - Tested for Elgg 2.0
