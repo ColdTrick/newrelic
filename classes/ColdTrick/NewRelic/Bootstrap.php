@@ -4,12 +4,25 @@ namespace ColdTrick\NewRelic;
 
 use Elgg\DefaultPluginBootstrap;
 use Elgg\Router\Route;
+use Elgg\Application;
 
 class Bootstrap extends DefaultPluginBootstrap {
 	
 	/**
 	 * {@inheritDoc}
-	 * @see \Elgg\DefaultPluginBootstrap::init()
+	 */
+	public function boot() {
+		
+		if (!$this->isAvailable() || !Application::isCli()) {
+			return;
+		}
+		
+		newrelic_set_appname(ini_get('newrelic.appname') . ' - CLI');
+		newrelic_background_job(true);
+	}
+	
+	/**
+	 * {@inheritDoc}
 	 */
 	public function init() {
 		
@@ -18,6 +31,30 @@ class Bootstrap extends DefaultPluginBootstrap {
 		}
 		
 		$this->logTransaction();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public function shutdown() {
+		
+		if (!$this->isAvailable()) {
+			return;
+		}
+		
+		if (!Application::isCli() || !(bool) $this->plugin()->force_cli_end_transaction) {
+			return;
+		}
+		
+		// stop transaction timer
+		newrelic_end_of_transaction();
+		// send all gathered data to the daemon
+		newrelic_end_transaction();
+		
+		// wait for the daemon to send all data
+		// it does this every minute
+		set_time_limit(0);
+		sleep(60);
 	}
 	
 	/**
@@ -78,6 +115,16 @@ class Bootstrap extends DefaultPluginBootstrap {
 			
 			// log the route name
 			newrelic_add_custom_parameter('route:name', $route->getName());
+		} elseif (Application::isCli()) {
+			$path = 'cli';
+			// try to find cli command
+			if (substr($_SERVER['SCRIPT_NAME'], -8) === 'elgg-cli') {
+				$path = 'elgg-cli';
+				$command = _elgg_services()->cli_input->getFirstArgument();
+				if (!empty($command)) {
+					$path .= ":{$command}";
+				}
+			}
 		} else {
 			$path = parse_url(current_page_url(), PHP_URL_PATH);
 		}
