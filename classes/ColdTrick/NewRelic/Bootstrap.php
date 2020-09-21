@@ -17,7 +17,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 			return;
 		}
 		
-		newrelic_set_appname(ini_get('newrelic.appname') . ' - CLI');
 		newrelic_background_job(true);
 	}
 	
