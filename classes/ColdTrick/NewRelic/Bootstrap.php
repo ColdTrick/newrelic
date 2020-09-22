@@ -98,7 +98,17 @@ class Bootstrap extends DefaultPluginBootstrap {
 		
 		$path = null;
 		$route = $this->getRoute();
-		if ($route instanceof Route) {
+		if (Application::isCli()) {
+			$path = 'cli';
+			// try to find cli command
+			if (substr($_SERVER['SCRIPT_NAME'], -8) === 'elgg-cli') {
+				$path = 'elgg-cli';
+				$command = _elgg_services()->cli_input->getFirstArgument();
+				if (!empty($command)) {
+					$path .= ":{$command}";
+				}
+			}
+		} elseif ($route instanceof Route) {
 			$path = $route->getPath();
 			
 			// log route params
@@ -114,16 +124,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 			
 			// log the route name
 			newrelic_add_custom_parameter('route:name', $route->getName());
-		} elseif (Application::isCli()) {
-			$path = 'cli';
-			// try to find cli command
-			if (substr($_SERVER['SCRIPT_NAME'], -8) === 'elgg-cli') {
-				$path = 'elgg-cli';
-				$command = _elgg_services()->cli_input->getFirstArgument();
-				if (!empty($command)) {
-					$path .= ":{$command}";
-				}
-			}
 		} else {
 			$path = parse_url(current_page_url(), PHP_URL_PATH);
 		}
