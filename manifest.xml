@@ -3,7 +3,7 @@
 	<name>New Relic</name>
 	<id>newrelic</id>
 	<author>ColdTrick IT Solutions</author>
-	<version>2.0</version>
+	<version>2.1</version>
 	<description>Adds support for New Relic performance metrics to your Elgg installation</description>
 	<website>http://www.coldtrick.com/</website>
 	<repository>https://github.com/ColdTrick/newrelic</repository>

@@ -1,6 +1,10 @@
 Version history
 ===============
 
+2.1 (2020-10-13):
+
+- added: improved CLI transaction tracking
+
 2.0 (2019-03-27):
 
 - changed: improved transaction name logging for Elgg 3.0
