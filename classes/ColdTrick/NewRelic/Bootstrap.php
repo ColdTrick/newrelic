@@ -17,6 +17,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 			return;
 		}
 		
+		// tell new relic this is a CLI / background call
 		newrelic_background_job(true);
 	}
 	
@@ -66,26 +67,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 	}
 	
 	/**
-	 * Get the configured route for this page
-	 *
-	 * @return void|Route
-	 */
-	protected function getRoute() {
-		
-		$matcher = _elgg_services()->urlMatcher;
-		$request = _elgg_services()->request;
-		
-		try {
-			$params = $matcher->matchRequest($request);
-			
-			$route = _elgg_services()->routes->get($params['_route']);
-			$route->setMatchedParameters($params);
-			
-			return $route;
-		} catch (\Exception $e) {}
-	}
-	
-	/**
 	 * Set the current transaction name
 	 *
 	 * @return void
@@ -97,7 +78,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		}
 		
 		$path = null;
-		$route = $this->getRoute();
+		$route = elgg_get_current_route();
 		if (Application::isCli()) {
 			$path = 'cli';
 			// try to find cli command
