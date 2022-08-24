@@ -4,7 +4,7 @@ use ColdTrick\NewRelic\Bootstrap;
 
 return [
 	'plugin' => [
-		'version' => '3.0',
+		'version' => '4.0',
 	],
 	'bootstrap' => Bootstrap::class,
 	'settings' => [
